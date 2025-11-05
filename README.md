@@ -2,6 +2,8 @@
 
 A modern web application to track and manage all your subscriptions in one place. Built with Next.js, Supabase, and Stripe.
 
+https://subscription-tracker-iwy6.vercel.app/dashboard
+
 ## Features
 
 - **Track Subscriptions**: Add, edit, and manage all your recurring subscriptions
