@@ -1,4 +1,8 @@
 import { supabase } from './supabase';
+import type { Database } from '@/types/database';
+
+type SubscriptionInsert = Database['public']['Tables']['subscriptions']['Insert'];
+type SubscriptionUpdate = Database['public']['Tables']['subscriptions']['Update'];
 
 export async function getSubscriptions(userId: string) {
   const { data, error } = await supabase
@@ -11,7 +15,7 @@ export async function getSubscriptions(userId: string) {
   return data;
 }
 
-export async function createSubscription(subscription: any) {
+export async function createSubscription(subscription: SubscriptionInsert) {
   const { data, error } = await supabase
     .from('subscriptions')
     .insert(subscription)
@@ -22,7 +26,7 @@ export async function createSubscription(subscription: any) {
   return data;
 }
 
-export async function updateSubscription(id: string, updates: any) {
+export async function updateSubscription(id: string, updates: SubscriptionUpdate) {
   const { data, error } = await supabase
     .from('subscriptions')
     .update(updates)

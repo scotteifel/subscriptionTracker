@@ -1,6 +1,4 @@
-import type { BillingCycle } from '@/types/subscription';
-
-export function calculateMonthlyCost(amount: number, billingCycle: BillingCycle): number {
+export function calculateMonthlyCost(amount: number, billingCycle: string): number {
   switch (billingCycle) {
     case 'weekly':
       return amount * 4.33; // Average weeks per month
@@ -15,7 +13,7 @@ export function calculateMonthlyCost(amount: number, billingCycle: BillingCycle)
   }
 }
 
-export function calculateYearlyCost(amount: number, billingCycle: BillingCycle): number {
+export function calculateYearlyCost(amount: number, billingCycle: string): number {
   return calculateMonthlyCost(amount, billingCycle) * 12;
 }
 
@@ -26,12 +24,12 @@ export function formatCurrency(amount: number, currency: string = 'USD'): string
   }).format(amount);
 }
 
-export function getTotalMonthlyCost(subscriptions: Array<{ amount: number; billing_cycle: BillingCycle; is_active: boolean }>): number {
+export function getTotalMonthlyCost(subscriptions: Array<{ amount: number; billing_cycle: string; is_active: boolean | null }>): number {
   return subscriptions
     .filter(sub => sub.is_active)
     .reduce((total, sub) => total + calculateMonthlyCost(sub.amount, sub.billing_cycle), 0);
 }
 
-export function getTotalYearlyCost(subscriptions: Array<{ amount: number; billing_cycle: BillingCycle; is_active: boolean }>): number {
+export function getTotalYearlyCost(subscriptions: Array<{ amount: number; billing_cycle: string; is_active: boolean | null }>): number {
   return getTotalMonthlyCost(subscriptions) * 12;
 }

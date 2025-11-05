@@ -2,7 +2,6 @@
 
 import { Trash2, Edit2, Calendar } from 'lucide-react';
 import { formatCurrency, calculateMonthlyCost } from '@/utils/calculations';
-import type { BillingCycle } from '@/types/subscription';
 import { format } from 'date-fns';
 
 interface SubscriptionCardProps {
@@ -10,11 +9,11 @@ interface SubscriptionCardProps {
   name: string;
   description?: string | null;
   amount: number;
-  currency: string;
-  billing_cycle: BillingCycle;
+  currency: string | null;
+  billing_cycle: string;
   next_billing_date: string;
   category?: string | null;
-  is_active: boolean;
+  is_active: boolean | null;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }
@@ -35,7 +34,7 @@ export default function SubscriptionCard({
   const monthlyCost = calculateMonthlyCost(amount, billing_cycle);
   const formattedDate = format(new Date(next_billing_date), 'MMM dd, yyyy');
 
-  const billingCycleDisplay = {
+  const billingCycleDisplay: Record<string, string> = {
     weekly: 'Weekly',
     monthly: 'Monthly',
     quarterly: 'Quarterly',
@@ -85,14 +84,14 @@ export default function SubscriptionCard({
             {billingCycleDisplay[billing_cycle]}
           </span>
           <span className="text-2xl font-bold text-gray-900 dark:text-white">
-            {formatCurrency(amount, currency)}
+            {formatCurrency(amount, currency || 'USD')}
           </span>
         </div>
 
         <div className="flex items-baseline justify-between text-sm">
           <span className="text-gray-600 dark:text-gray-400">Monthly equivalent</span>
           <span className="font-semibold text-gray-700 dark:text-gray-300">
-            {formatCurrency(monthlyCost, currency)}
+            {formatCurrency(monthlyCost, currency || 'USD')}
           </span>
         </div>
 
