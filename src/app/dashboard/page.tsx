@@ -63,8 +63,30 @@ function DashboardContent() {
   };
 
   const handleUpgradeToPro = async () => {
-    // TODO: Implement Stripe checkout
-    alert('Stripe checkout will be implemented here!');
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user!.id,
+          email: user!.email,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      } else {
+        alert('Failed to create checkout session');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Something went wrong. Please try again.');
+    }
   };
 
   const activeSubscriptions = subscriptions.filter(sub => sub.is_active);
