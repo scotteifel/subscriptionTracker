@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
@@ -9,12 +11,18 @@ export default function Home() {
           Track all your subscriptions in one place. Never miss a billing date again.
         </p>
         <div className="flex gap-4 justify-center">
-          <button className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition">
+          <Link
+            href="/signup"
+            className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+          >
             Get Started
-          </button>
-          <button className="px-6 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg font-semibold border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-            Learn More
-          </button>
+          </Link>
+          <Link
+            href="/login"
+            className="px-6 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg font-semibold border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            Sign In
+          </Link>
         </div>
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
