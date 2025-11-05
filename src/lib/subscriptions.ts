@@ -1,9 +1,4 @@
 import { supabase } from './supabase';
-import type { Database } from '@/types/database';
-
-type SubscriptionInsert = Database['public']['Tables']['subscriptions']['Insert'];
-type SubscriptionUpdate = Database['public']['Tables']['subscriptions']['Update'];
-type SubscriptionRow = Database['public']['Tables']['subscriptions']['Row'];
 
 export async function getSubscriptions(userId: string) {
   const { data, error } = await supabase
@@ -13,10 +8,10 @@ export async function getSubscriptions(userId: string) {
     .order('created_at', { ascending: false });
 
   if (error) throw error;
-  return data as SubscriptionRow[];
+  return data;
 }
 
-export async function createSubscription(subscription: SubscriptionInsert) {
+export async function createSubscription(subscription: any) {
   const { data, error } = await supabase
     .from('subscriptions')
     .insert(subscription)
@@ -24,10 +19,10 @@ export async function createSubscription(subscription: SubscriptionInsert) {
     .single();
 
   if (error) throw error;
-  return data as SubscriptionRow;
+  return data;
 }
 
-export async function updateSubscription(id: string, updates: SubscriptionUpdate) {
+export async function updateSubscription(id: string, updates: any) {
   const { data, error } = await supabase
     .from('subscriptions')
     .update(updates)
@@ -36,7 +31,7 @@ export async function updateSubscription(id: string, updates: SubscriptionUpdate
     .single();
 
   if (error) throw error;
-  return data as SubscriptionRow;
+  return data;
 }
 
 export async function deleteSubscription(id: string) {
